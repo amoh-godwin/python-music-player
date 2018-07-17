@@ -183,131 +183,7 @@ ApplicationWindow {
 
                             model: 40
 
-                            Component {
-                                id: lvDelegate
-
-                                Rectangle {
-                                    id: dou
-                                    width: parent.width
-                                    height: 50
-                                    color: dou.ListView.isCurrentItem ? "#e1e1e1" : (index % 2 ? "white" : "#f1f1f1")
-
-                                    RowLayout {
-
-                                        anchors.left: parent.left
-                                        anchors.leftMargin: 12
-                                        width: parent.width - 12
-                                        height: parent.height
-                                        spacing: 12
-
-                                        CheckBox {
-                                            Layout.preferredWidth: 22
-
-                                            indicator: Rectangle {
-                                                anchors.centerIn: parent
-                                                implicitWidth: 22
-                                                implicitHeight: 22
-                                                color: "transparent"
-                                                border.width: 1
-                                                visible: dou.ListView.isCurrentItem ? true : false
-                                            }
-
-                                        }
-
-                                        Rectangle {
-                                            Layout.fillWidth: true
-                                            Layout.fillHeight: true
-                                            color: "transparent"
-                                            Text {
-                                                width: parent.width
-                                                rightPadding: 8
-                                                anchors.verticalCenter: parent.verticalCenter
-                                                clip: true
-                                                text: qsTr("Rivers of Jordan || busysinging.com")
-                                                font.pixelSize: 16
-                                                font.family: "Segoe UI Semilight"
-                                            }
-
-                                            Rectangle {
-                                                anchors.right: parent.right
-                                                width: 104
-                                                height: parent.height
-                                                color: "#e1e1e1"
-                                                visible: dou.ListView.isCurrentItem ? true : false
-
-                                                Row {
-                                                    anchors.right: parent.right
-                                                    width: 96
-
-                                                    CustomToolButton {
-                                                        width: 48
-                                                        iconSource: "icons/ic_play_arrow_black_48dp.png"
-                                                    }
-
-                                                    CustomToolButton {
-                                                        width: 48
-                                                        iconSource: "icons/ic_add_black_48dp.png"
-                                                    }
-
-
-                                                }
-
-                                            }
-
-                                        }
-
-                                        Rectangle {
-                                            Layout.fillWidth: true
-                                            Layout.fillHeight: true
-                                            color: "transparent"
-
-                                            Text {
-                                                anchors.verticalCenter: parent.verticalCenter
-                                                text: qsTr("Lecrae")
-                                                font.pixelSize: 13
-                                                font.family: "Segoe UI Semilight"
-                                            }
-                                        }
-
-                                        Rectangle {
-                                            width: 36
-                                            Layout.fillHeight: true
-                                            color: "transparent"
-
-                                            Text {
-                                                anchors.right: parent.right
-                                                anchors.verticalCenter: parent.verticalCenter
-                                                text: "1:10:12"
-                                                font.family: "Segoe UI Semilight"
-                                                font.pixelSize: 13
-                                            }
-                                        }
-
-                                        Rectangle {
-                                            anchors.right: parent.right
-                                            Layout.preferredWidth: 136
-                                            Layout.fillHeight: true
-                                            color: "transparent"
-                                        }
-
-                                    }
-
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        hoverEnabled: true
-
-                                        onEntered: {
-                                            var index = songs_view.indexAt(parent.x, parent.y)
-                                            songs_view.currentIndex = index
-                                        }
-
-                                    }
-
-                                }
-
-                            }
-
-                            delegate: lvDelegate
+                            delegate: MusicDelegate {}
 
                             focus: true
 
@@ -344,7 +220,7 @@ ApplicationWindow {
 
                 CustomToolButton {
                     Layout.fillWidth: true
-                    iconSource: "icons/ic_menu_black_24dp.png"
+                    text: "\uE700"
 
                     onClicked: {
                         navCont.open()
@@ -354,32 +230,37 @@ ApplicationWindow {
 
                 CustomToolButton {
                     Layout.fillWidth: true
-                    iconSource: "icons/ic_search_black_48dp.png"
+                    text: "\uE721"
                 }
 
                 CustomToolButton {
                     Layout.fillWidth: true
-                    iconSource: "icons/ic_queue_music_black_48dp.png"
+                    text: "\uEc4f"
                 }
 
                 CustomToolButton {
                     Layout.fillWidth: true
-                    iconSource: "icons/ic_query_builder_black_48dp.png"
+                    text: "\uE823"
                 }
 
                 CustomToolButton {
                     Layout.fillWidth: true
-                    iconSource: "icons/ic_equalizer_black_48dp.png"
+                    text: "\uE700"
                 }
 
                 CustomToolButton {
                     Layout.fillWidth: true
-                    iconSource: "icons/ic_playlist_play_black_48dp.png"
+                    text: "\uE90B"
                 }
 
                 CustomToolButton {
                     Layout.fillWidth: true
-                    iconSource: "icons/ic_add_black_48dp.png"
+                    text: "\uE710"
+                }
+
+                CustomToolButton {
+                    Layout.fillWidth: true
+                    text: "\uE712"
                 }
             }
 

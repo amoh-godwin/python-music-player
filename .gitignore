@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# PyQt5, Qml compiled code
+
 # C extensions
 *.so
 
