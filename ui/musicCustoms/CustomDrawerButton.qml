@@ -44,7 +44,7 @@ Button {
             anchors.leftMargin: 12
             text: btn.text
             font.family: "Segoe UI"
-            renderType: Text.QtRendering
+            renderType: Text.NativeRendering
             color: "#1e1e1e"
             font.pixelSize: 16
         }

@@ -6,7 +6,7 @@ ToolBar {
     id: drawerNav
     anchors.left: parent.left
     width: parent.width
-    height: parent.height - 90
+    height: parent.height
     spacing: 0
 
     background: Rectangle {
@@ -16,6 +16,7 @@ ToolBar {
 
     ColumnLayout {
         width: parent.width
+        height: parent.height
         spacing: 0
 
         CustomToolButton {
@@ -88,6 +89,8 @@ ToolBar {
 
         ToolSeparator {
             anchors.horizontalCenter: parent.horizontalCenter
+            topPadding: 0
+            bottomPadding: 0
             Layout.preferredWidth: 300
             orientation: Qt.Horizontal
         }
@@ -97,6 +100,35 @@ ToolBar {
             text: qsTr('Playlists')
             unicode: music_settings.playlistIcon
         }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            color: "transparent"
+
+            ColumnLayout {
+                anchors.bottom: parent.bottom
+                anchors.bottomMargin: 8
+                width: parent.width
+                spacing: 0
+
+                ToolSeparator {
+                    bottomPadding: 0
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    Layout.preferredWidth: 300
+                    orientation: Qt.Horizontal
+                }
+
+                CustomDrawerButton {
+                    Layout.fillWidth: true
+                    text: qsTr('Settings')
+                    unicode: music_settings.cogIcon
+                }
+
+            }
+
+        }
+
     }
 
 }
