@@ -8,10 +8,10 @@ ApplicationWindow {
     visible: true
     width: 800
     height: 600
-    font.family: "Segoe UI"
 
     title: qsTr(' ')
 
+    MusicProperties {id: music_settings}
 
     property bool inPotrait: window.width < 1024
     property color artistNeutral: Qt.darker("#D13438")
@@ -35,108 +35,7 @@ ApplicationWindow {
                 color: "#f1f1f1"
             }
 
-            ToolBar {
-                id: drawerNav
-                anchors.left: parent.left
-                width: parent.width
-                height: parent.height - 90
-                spacing: 0
-
-                background: Rectangle {
-                    color: "#f1f1f1"
-
-                }
-
-                ColumnLayout {
-                    width: parent.width
-                    spacing: 0
-
-                    CustomToolButton {
-                        Layout.preferredWidth: 48
-                        iconSource: "icons/ic_menu_black_24dp.png"
-
-                        onClicked: navCont.close()
-
-                    }
-
-                    Rectangle {
-                        Layout.fillWidth: true
-                        height: 50
-                        color: "transparent"
-
-                        TextField {
-                            id: sch_field
-                            anchors.centerIn: parent
-                            placeholderText: qsTr("Search")
-
-                            font.pixelSize: 16
-                            font.family: "Segoe UI"
-                            rightPadding: rw.width
-
-                            background: Rectangle {
-                                implicitWidth: 300
-                                implicitHeight: 36
-                                color: if(parent.activeFocus) {
-                                           "white"
-                                       }else if(parent.hovered) {
-                                           Qt.rgba(255, 255, 255, 0.75)
-                                       }else {
-                                           "#75ffffff"
-                                       }
-
-                                Row {
-                                    id: rw
-                                    anchors.right: parent.right
-                                    anchors.verticalCenter: parent.verticalCenter
-
-                                    CustomButton {
-                                        icon.source: "icons/ic_close_black_48dp.png"
-                                        visible: sch_field.length > 0
-                                        onClicked: sch_field.text = ""
-                                    }
-
-                                    CustomButton {
-                                        icon.source: "icons/ic_search_black_48dp.png"
-                                    }
-
-                                }
-                            }
-
-                        }
-                    }
-
-                    CustomDrawerButton {
-                        Layout.fillWidth: true
-                        text: qsTr("My music")
-                        icon.source: "icons/ic_queue_music_black_48dp.png"
-                    }
-
-                    CustomDrawerButton {
-                        Layout.fillWidth: true
-                        text: qsTr("Recent Plays")
-                        icon.source: "icons/ic_query_builder_black_48dp.png"
-                    }
-
-                    CustomDrawerButton {
-                        Layout.fillWidth: true
-                        text: qsTr("Now playing")
-                        icon.source: "icons/ic_equalizer_black_48dp.png"
-                    }
-
-                    ToolSeparator {
-                        anchors.horizontalCenter: parent.horizontalCenter
-                        Layout.preferredWidth: 300
-                        orientation: Qt.Horizontal
-                    }
-
-                    CustomDrawerButton {
-                        Layout.fillWidth: true
-                        text: qsTr('Playlists')
-                        icon.source: "icons/ic_playlist_play_black_48dp.png"
-                    }
-                }
-
-            }
+            CustomDrawerToolBar {}
 
         }
 

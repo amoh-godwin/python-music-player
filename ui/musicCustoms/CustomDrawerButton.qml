@@ -6,6 +6,7 @@ Button {
 
     id: btn
 
+    property string unicode: ""
 
     background: Rectangle {
         implicitHeight: 48
@@ -28,13 +29,14 @@ Button {
         property string iconSource: "icons/ic_queue_music_black_48dp.png"
 
 
-        Image {
-            anchors.left: parent.left
-            anchors.leftMargin: 12
-            anchors.verticalCenter: parent.verticalCenter
-            sourceSize.width: 24
-            sourceSize.height: 24
-            source: btn.icon.source
+        Text {
+            leftPadding: 12
+            text: btn.unicode
+            verticalAlignment: Text.AlignVCenter
+            font.family: "Segoe MDL2 Assets"
+            font.pixelSize: 18
+            color: btn.pressed ? "white" : (btn.hovered ? "dodgerblue" : "black")
+            renderType: Text.NativeRendering
         }
 
         Text {
