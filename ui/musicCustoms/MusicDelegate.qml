@@ -50,7 +50,7 @@ Component {
                     rightPadding: 8
                     anchors.verticalCenter: parent.verticalCenter
                     clip: true
-                    text: qsTr("Rivers of Jordan || busysinging.com")
+                    text: qsTr(title)
                     font.pixelSize: 16
                     font.family: "Segoe UI Semilight"
                     color: ctrl.ListView.isCurrentItem ? "white" :"black"
@@ -91,7 +91,7 @@ Component {
 
                 Text {
                     anchors.verticalCenter: parent.verticalCenter
-                    text: qsTr("Lecrae")
+                    text: qsTr(artist)
                     font.pixelSize: 13
                     font.family: "Segoe UI Semilight"
                     color: ctrl.ListView.isCurrentItem ? "white" :"black"
@@ -106,7 +106,7 @@ Component {
                 Text {
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    text: "1:10:12"
+                    text: qsTr(duration)
                     font.family: "Segoe UI Semilight"
                     font.pixelSize: 13
                     color: ctrl.ListView.isCurrentItem ? "white" :"black"

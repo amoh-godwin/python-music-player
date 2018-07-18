@@ -95,10 +95,23 @@ ToolBar {
             orientation: Qt.Horizontal
         }
 
-        CustomDrawerButton {
+        RowLayout {
             Layout.fillWidth: true
-            text: qsTr('Playlists')
-            unicode: music_settings.playlistIcon
+            spacing: 0
+            height: 48
+
+            CustomDrawerButton {
+                Layout.fillWidth: true
+                text: qsTr('Playlists')
+                unicode: music_settings.playlistIcon
+            }
+
+            CustomToolButton {
+                Layout.preferredWidth: 48
+                Layout.preferredHeight: 48
+                text: music_settings.addIcon
+            }
+
         }
 
         Rectangle {

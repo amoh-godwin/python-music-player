@@ -2,6 +2,7 @@ import QtQuick 2.10
 
 QtObject {
     property string navIcon: "\uE700"
+    property string addIcon: "\uE710"
     property string cancelIcon: "\uE711"
     property string searchIcon: "\uE721"
     property string recentIcon: "\uE823"

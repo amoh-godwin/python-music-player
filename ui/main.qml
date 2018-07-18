@@ -16,8 +16,9 @@ ApplicationWindow {
     property bool inPotrait: window.width < 1024
     property color artistNeutral: Qt.darker("#D13438")
     property color artistTint: Qt.tint(artistNeutral, "#21ffffff")
-    property var songs: {"song": "Song Title", "artist": "Artist Name", "time": "12: 03"}
+    property var songs: {"song": "Song Title", "artist": "Artist Name", "album": "Album Title", "time": "12: 03"}
 
+    // Drawer and the stack
     Rectangle {
 
         width: parent.width
@@ -80,7 +81,7 @@ ApplicationWindow {
                                 bottom: parent.bottom
                             }
 
-                            model: 40
+                            model: MusicModel {}
 
                             delegate: MusicDelegate {}
 
@@ -98,6 +99,7 @@ ApplicationWindow {
 
     }
 
+    // The Navs
     Rectangle {
         anchors.fill: parent
         color: "transparent"
