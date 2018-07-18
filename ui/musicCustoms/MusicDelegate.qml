@@ -1,7 +1,6 @@
 import QtQuick 2.10
 import QtQuick.Controls 2.3
 import QtQuick.Layouts 1.3
-//import ""
 
 Component {
     id: lvDelegate
@@ -70,12 +69,12 @@ Component {
 
                         CustomToolButton {
                             width: 48
-                            iconSource: "icons/ic_play_arrow_black_48dp.png"
+                            text: "\uE768" //"\uEE4a" // "\uEDB5"
                         }
 
                         CustomToolButton {
                             width: 48
-                            iconSource: "icons/ic_add_black_48dp.png"
+                            text: "\uE710"
                         }
 
 
