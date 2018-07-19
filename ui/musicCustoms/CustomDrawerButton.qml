@@ -18,7 +18,7 @@ Button {
             width: 4
             height: parent.height
             color: "dodgerblue"
-            visible: btn.pressed
+            visible: btn.checked
         }
 
     }
@@ -35,7 +35,6 @@ Button {
             verticalAlignment: Text.AlignVCenter
             font.family: "Segoe MDL2 Assets"
             font.pixelSize: 18
-            color: btn.pressed ? "white" : (btn.hovered ? "dodgerblue" : "black")
             renderType: Text.NativeRendering
         }
 

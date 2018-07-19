@@ -14,6 +14,14 @@ ToolBar {
 
     }
 
+    ButtonGroup {
+        id: drawerGroup
+
+        onClicked: {
+            button.checked = true
+        }
+    }
+
     ColumnLayout {
         width: parent.width
         height: parent.height
@@ -73,18 +81,25 @@ ToolBar {
             Layout.fillWidth: true
             text: qsTr("My music")
             unicode: music_settings.musicIcon
+
+            ButtonGroup.group: drawerGroup
         }
 
         CustomDrawerButton {
             Layout.fillWidth: true
             text: qsTr("Recent Plays")
             unicode: music_settings.recentIcon
+
+            ButtonGroup.group: drawerGroup
+
         }
 
         CustomDrawerButton {
             Layout.fillWidth: true
             unicode: music_settings.nowPlayingIcon
             text: qsTr("Now playing")
+
+            ButtonGroup.group: drawerGroup
         }
 
         ToolSeparator {
@@ -104,6 +119,9 @@ ToolBar {
                 Layout.fillWidth: true
                 text: qsTr('Playlists')
                 unicode: music_settings.playlistIcon
+
+                ButtonGroup.group: drawerGroup
+
             }
 
             CustomToolButton {
@@ -136,6 +154,9 @@ ToolBar {
                     Layout.fillWidth: true
                     text: qsTr('Settings')
                     unicode: music_settings.cogIcon
+
+                    ButtonGroup.group: drawerGroup
+
                 }
 
             }
