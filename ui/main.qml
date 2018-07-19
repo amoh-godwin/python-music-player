@@ -16,7 +16,8 @@ ApplicationWindow {
     property bool inPotrait: window.width < 1024
     property color artistNeutral: Qt.darker("#D13438")
     property color artistTint: Qt.tint(artistNeutral, "#21ffffff")
-    property var songs: {"song": "Song Title", "artist": "Artist Name", "album": "Album Title", "time": "12: 03"}
+    property string songs_list: [{}, {}]
+    property int songs_count: 0
 
     // Drawer and the stack
     Rectangle {
@@ -84,6 +85,11 @@ ApplicationWindow {
                             model: MusicModel {}
 
                             delegate: MusicDelegate {}
+
+                            Component.onCompleted: {
+                                model.append(songs_list)
+                                songs_count = songs_view.count
+                            }
 
                             focus: true
 
@@ -249,7 +255,7 @@ ApplicationWindow {
 
                         CustomShuffleButton {
                             Layout.fillHeight: true
-                            text: qsTr('Shuffle all (98)')
+                            text: qsTr('Shuffle all (' + songs_count + ')')
                             unicon: "\uE8b1"
                         }
 
