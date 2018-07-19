@@ -41,6 +41,7 @@ Component {
 
             }
 
+            // title
             Rectangle {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -84,6 +85,7 @@ Component {
 
             }
 
+            // artist
             Rectangle {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
@@ -98,6 +100,23 @@ Component {
                 }
             }
 
+            // album
+            Rectangle {
+                Layout.fillWidth: !inPotrait
+                Layout.fillHeight: true
+                color: "transparent"
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr(album)
+                    font.pixelSize: 13
+                    font.family: "Segoe UI Semilight"
+                    color: ctrl.ListView.isCurrentItem ? "white" :"black"
+                    visible: !inPotrait
+                }
+            }
+
+            // duration
             Rectangle {
                 width: 36
                 Layout.fillHeight: true
@@ -113,6 +132,7 @@ Component {
                 }
             }
 
+            // stable, local only
             Rectangle {
                 anchors.right: parent.right
                 Layout.preferredWidth: 136

@@ -16,7 +16,7 @@ ApplicationWindow {
     property bool inPotrait: window.width < 1024
     property color artistNeutral: Qt.darker("#D13438")
     property color artistTint: Qt.tint(artistNeutral, "#21ffffff")
-    property string songs_list: [{}, {}]
+    property var songs_list: [{}, {}]
     property int songs_count: 0
 
     // Drawer and the stack
