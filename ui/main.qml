@@ -373,14 +373,18 @@ ApplicationWindow {
                         width: parent.width
                         height: parent.height
 
-                        Image {
+                        Rectangle {
+                            Layout.fillWidth: true
                             Layout.fillHeight: true
-                            //height: 90
-                            sourceSize.width: 90
-                            //sourceSize.height: 120
-                            //fillMode: Image.PreserveAspectCrop
-                            source: "images/apple-3341245_1920.jpg"
-                            clip: true
+                            color: "#e1e1e1"
+
+                            Text {
+                                anchors.centerIn: parent
+                                text: music_settings.albumIcon
+                                font.family: "Segoe MDL2 Assets"
+                                font.pixelSize: 32
+                            }
+
                         }
 
                         Column {

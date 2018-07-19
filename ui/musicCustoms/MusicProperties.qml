@@ -10,5 +10,6 @@ QtObject {
     property string playlistIcon: "\uE90B"
     property string nowPlayingIcon: "\uEA37"
     property string cogIcon: "\uE713"
+    property string albumIcon: "\uE93c"
 
 }
