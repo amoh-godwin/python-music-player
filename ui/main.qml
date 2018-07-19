@@ -16,7 +16,7 @@ ApplicationWindow {
     property bool inPotrait: window.width < 1024
     property color artistNeutral: Qt.darker("#D13438")
     property color artistTint: Qt.tint(artistNeutral, "#21ffffff")
-    property var songs_list: [{}, {}]
+    property var songs_list: []
     property int songs_count: 0
 
     // Drawer and the stack
@@ -110,68 +110,7 @@ ApplicationWindow {
         anchors.fill: parent
         color: "transparent"
 
-        ToolBar {
-            id: sideNav
-            anchors.left: parent.left
-            width: 48
-            height: parent.height - 90
-            spacing: 0
-
-            background: Rectangle {
-                color: "#f1f1f1"
-            }
-
-            ColumnLayout {
-                width: parent.width
-                spacing: 0
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uE700"
-
-                    onClicked: {
-                        navCont.open()
-                    }
-
-                }
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uE721"
-                }
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uEc4f"
-                }
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uE823"
-                }
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uE700"
-                }
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uE90B"
-                }
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uE710"
-                }
-
-                CustomToolButton {
-                    Layout.fillWidth: true
-                    text: "\uE712"
-                }
-            }
-
-        }
+        CustomSideNav {id: sideNav}
 
 
         Rectangle {
