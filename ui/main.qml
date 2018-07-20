@@ -491,6 +491,10 @@ ApplicationWindow {
                             icon.source: "icons/ic_more_horiz_black_48dp.png"
                             icon.color: "white"
 
+                            onClicked: {
+                                contextMenu.popup()
+                            }
+
                             background: Rectangle {
                                 implicitWidth: 40
                                 implicitHeight: 40
@@ -499,9 +503,25 @@ ApplicationWindow {
                             }
                         }
 
-                        // popup Menu
+                        // popup Menu Does not draw unless it's called
                         CustomMenu {
-                            //
+                            id: contextMenu
+
+                            Action {
+                                text: qsTr('Shuffle: off')
+                                icon.name: music_settings.shuffleIcon
+                            }
+
+                            Action {
+                                text: qsTr('Repeat: One')
+                                icon.name: music_settings.repeatOne
+                            }
+
+                            Action {
+                                text: qsTr('Switch to Fullscreen')
+                                icon.name: music_settings.fullscreenIcon
+                            }
+
                         }
 
                     }
