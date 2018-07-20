@@ -367,37 +367,20 @@ ApplicationWindow {
                         anchors.horizontalCenter: parent.horizontalCenter
                         height: 50
 
-                        Button {
+                        CustomPlayButton {
                             anchors.verticalCenter: parent.verticalCenter
-                            icon.source: "icons/ic_shuffle_black_48dp.png"
-                            icon.color: "white"
-
-                            background: Rectangle {
-                                implicitWidth: 40
-                                implicitHeight: 40
-                                radius: 20
-                                color: parent.hovered || parent.pressed ? "#25000000" : "transparent"
-                            }
+                            text: music_settings.shuffleIcon
                             visible: !inPotrait
                         }
 
-                        Button {
+                        CustomPlayButton {
                             anchors.verticalCenter: parent.verticalCenter
-                            icon.source: "icons/ic_skip_previous_black_48dp.png"
-                            icon.color: "white"
-
-                            background: Rectangle {
-                                implicitWidth: 40
-                                implicitHeight: 40
-                                radius: 20
-                                color: parent.hovered || parent.pressed ? "#25000000" : "transparent"
-                            }
+                            text: music_settings.previousIcon
                         }
 
                         Button {
                             anchors.verticalCenter: parent.verticalCenter
-                            icon.source: "icons/ic_pause_black_48dp.png"
-                            icon.color: "white"
+                            text: music_settings.playIcon
 
                             background: Rectangle {
                                 implicitWidth: 48
@@ -408,33 +391,26 @@ ApplicationWindow {
                                 border.color: parent.hovered || parent.pressed ? "#25000000" : "#25ffffff"
                             }
 
-                        }
-
-                        Button {
-                            anchors.verticalCenter: parent.verticalCenter
-                            icon.source: "icons/ic_skip_next_black_48dp.png"
-                            icon.color: "white"
-
-                            background: Rectangle {
-                                implicitWidth: 40
-                                implicitHeight: 40
-                                radius: 20
-                                color: parent.hovered || parent.pressed ? "#25000000" : "transparent"
+                            contentItem: Text{
+                                text: parent.text
+                                font.family: music_settings.segoeIcons.family
+                                font.pixelSize: 24
+                                horizontalAlignment: Text.AlignHCenter
+                                verticalAlignment: Text.AlignVCenter
+                                color: "white"
                             }
 
                         }
 
-                        Button {
+                        CustomPlayButton {
                             anchors.verticalCenter: parent.verticalCenter
-                            icon.source: "icons/ic_replay_black_48dp.png"
-                            icon.color: "white"
+                            text: music_settings.nextIcon
 
-                            background: Rectangle {
-                                implicitWidth: 40
-                                implicitHeight: 40
-                                radius: 20
-                                color: parent.hovered || parent.pressed ? "#25000000" : "transparent"
-                            }
+                        }
+
+                        CustomPlayButton {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: music_settings.repeatOne
                             visible: !inPotrait
                         }
 
@@ -471,35 +447,20 @@ ApplicationWindow {
                         anchors.right: parent.right
                         anchors.rightMargin: 8
 
-                        Button {
-                            icon.source: "icons/ic_volume_up_black_48dp.png"
-                            icon.color: "white"
-
-                            background: Rectangle {
-                                implicitWidth: 40
-                                implicitHeight: 40
-                                radius: 20
-                                color: parent.hovered || parent.pressed ? "#25000000" : "transparent"
-                            }
+                        CustomPlayButton {
+                            text: music_settings.volume3Icon
                         }
 
                         CustomSlider {
                             //
                         }
 
-                        Button {
-                            icon.source: "icons/ic_more_horiz_black_48dp.png"
-                            icon.color: "white"
+                        CustomPlayButton {
+
+                            text: music_settings.moreIcon
 
                             onClicked: {
                                 contextMenu.popup()
-                            }
-
-                            background: Rectangle {
-                                implicitWidth: 40
-                                implicitHeight: 40
-                                radius: 20
-                                color: parent.hovered || parent.pressed ? "#25000000" : "transparent"
                             }
                         }
 
