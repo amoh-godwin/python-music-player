@@ -382,6 +382,10 @@ ApplicationWindow {
                             anchors.verticalCenter: parent.verticalCenter
                             text: music_settings.playIcon
 
+                            onClicked: {
+                                Functions.play("C:/Users/Godwin/Music/Joyce Blessing – I Swerve You (Prod. by Linkin) (www.ndwomfie.com).mp3")
+                            }
+
                             background: Rectangle {
                                 implicitWidth: 48
                                 implicitHeight: 48
@@ -399,6 +403,7 @@ ApplicationWindow {
                                 verticalAlignment: Text.AlignVCenter
                                 color: "white"
                             }
+
 
                         }
 
@@ -494,4 +499,11 @@ ApplicationWindow {
         }
 
     }
+
+
+    Connections {
+        target: Functions
+    }
+
+
 }
