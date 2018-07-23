@@ -23,6 +23,7 @@ class Control(QObject):
         self._not_paused = True
         self._not_stopped = False
         
+    stillPlaying = pyqtSignal(str, arguments=['playing'])
     completedPlaying = pyqtSignal(str, arguments=["complete"])
         
 
@@ -61,6 +62,7 @@ class Control(QObject):
                         output = True)
 
         data = mbin.readframes(2048)
+        self.playing()
         self._not_stopped = True
 
         while self.app_running and len(data) != 0:
@@ -127,6 +129,16 @@ class Control(QObject):
         """
 
         self._not_paused = True
+
+
+    def playing(self):
+
+
+        """
+        """
+
+
+        self.stillPlaying.emit('playing')
 
 
     def complete(self):

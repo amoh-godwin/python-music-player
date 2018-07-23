@@ -381,7 +381,8 @@ ApplicationWindow {
                             text: music_settings.previousIcon
                             onClicked: {
 
-                                Functions.play(song_model.get(now_playing - 1).title)
+                                now_playing -= 1
+                                Functions.play(song_model.get(now_playing).title)
 
                             }
                         }
@@ -435,7 +436,8 @@ ApplicationWindow {
                             text: music_settings.nextIcon
 
                             onClicked: {
-                                Functions.play(song_model.get(now_playing + 1).title)
+                                now_playing += 1
+                                Functions.play(song_model.get(now_playing).title)
                             }
 
 
@@ -534,6 +536,10 @@ ApplicationWindow {
 
         onCompletedPlaying: {
             playButton.text = music_settings.playIcon
+        }
+
+        onStillPlaying: {
+            playButton.text = music_settings.pauseIcon
         }
 
     }
