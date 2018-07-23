@@ -21,6 +21,7 @@ class Control(QObject):
         self.file = ''
         self.app_running = True
         self._not_paused = True
+        self._not_stopped = False
         
     completedPlaying = pyqtSignal(str, arguments=["complete"])
         
@@ -33,6 +34,7 @@ class Control(QObject):
         """
 
 
+        self._not_stopped = False
         self.file = file
         play_thread = threading.Thread(target=self._play)
         play_thread.start()
@@ -59,20 +61,23 @@ class Control(QObject):
                         output = True)
 
         data = mbin.readframes(2048)
-        
-        #while data:
+        self._not_stopped = True
 
         while self.app_running and len(data) != 0:
+            
 
-            if self._not_paused:
-
-                stream.write(data)
-                data = mbin.readframes(1024)
-
-            else:
+            if self._not_stopped:
+                if self._not_paused:
+    
+                    stream.write(data)
+                    data = mbin.readframes(512)
                 
-                # pause
-                pass
+                else:
+                    
+                    #pause
+                    pass
+            else:
+                break
 
         self.complete()
         mbin.close()
@@ -132,4 +137,9 @@ class Control(QObject):
 
 
         print('complete')
-        self.completedPlaying.emit('completed')
+        if self._not_paused:
+            self.completedPlaying.emit('completed')
+        elif self._not_stopped:
+            pass
+        else:
+            self.completedPlaying.emit('completed')
