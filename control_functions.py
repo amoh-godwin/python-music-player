@@ -1,7 +1,7 @@
 import sys
+import threading
 import pyaudio
 import wave
-from urllib.request import urlopen
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 
 class Control(QObject):
@@ -13,12 +13,14 @@ class Control(QObject):
     def __init__(self):
 
 
-
         """
         """
 
 
         QObject.__init__(self)
+        self.file = ''
+        self.app_running = True
+        self._not_paused = True
         
 
     @pyqtSlot(str)
@@ -29,11 +31,22 @@ class Control(QObject):
         """
 
 
-        # pyaudio lets go
-        file = "C:/Windows/media/Alarm04.wav"
-        print(file)
+        self.file = file
+        play_thread = threading.Thread(target=self._play)
+        play_thread.start()
+
+
+    def _play(self):
+
+
+        """
+        """
+
+
+        print(self.file)
+        self.file = "C:/Windows/media/Alarm04.wav"
         
-        mbin = wave.open(file, mode='rb')
+        mbin = wave.open(self.file, mode='rb')
         
         pyaud = pyaudio.PyAudio()
         
@@ -42,15 +55,14 @@ class Control(QObject):
                         channels = 1,
                         rate = srate,
                         output = True)
-        
-        
-        #url = "file:///" + file # Assuming you retrive audio data from an URL
-        #mbin = urlopen(url)
+
         data = mbin.readframes(1024)
         
         while data:
-            stream.write(data)
-            data = mbin.readframes(8192)
+
+            while self.app_running:
+                stream.write(data)
+                data = mbin.readframes(8192)
 
         mbin.close()
         stream.stop_stream()

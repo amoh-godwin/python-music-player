@@ -17,6 +17,7 @@ class MusicApp():
     def __init__(self):
         super.__init__
         self.main_qml = ""
+        self.control = ()
 
         self._preprocesses()
 
@@ -28,7 +29,7 @@ class MusicApp():
         """
     
     
-        pass
+        self.control.app_running = False
     
     
     def _preprocesses(self):
@@ -51,8 +52,8 @@ class MusicApp():
         # start app
         app = QGuiApplication(sys.argv)
         engine = QQmlApplicationEngine()
-        control = Control()
-        engine.rootContext().setContextProperty('Functions', control)
+        self.control = Control()
+        engine.rootContext().setContextProperty('Functions', self.control)
         engine.load(self.main_qml)
         engine.quit.connect(self._postprocesses)
         sys.exit(app.exec_())

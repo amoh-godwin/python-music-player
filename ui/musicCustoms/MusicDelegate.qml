@@ -6,6 +6,7 @@ Component {
     id: lvDelegate
 
 
+
     Rectangle {
 
         id: ctrl
@@ -13,9 +14,30 @@ Component {
         property bool hovered: false
         property color curr_color: "dodgerblue"
 
+        MusicProperties { id: music_settings}
+
         width: parent.width
         height: 50
         color: ctrl.ListView.isCurrentItem ? ctrl.curr_color : ( ctrl.hovered ? "#e1e1e1" : (index % 2 ? "white" : "#f1f1f1") )
+
+        MouseArea {
+            anchors.fill: parent
+            hoverEnabled: true
+
+            onEntered: {
+                ctrl.hovered = true
+            }
+
+            onClicked: {
+                var index = songs_view.indexAt(parent.x, parent.y)
+                songs_view.currentIndex = index
+            }
+
+            onExited: {
+                ctrl.hovered = false
+            }
+
+        }
 
 
         RowLayout {
@@ -64,18 +86,26 @@ Component {
                     color: "#e1e1e1"
                     visible: ctrl.ListView.isCurrentItem ? true : false
 
-                    Row {
+                    RowLayout {
                         anchors.right: parent.right
                         width: 96
 
                         CustomToolButton {
                             width: 48
-                            text: "\uE768" //"\uEE4a" // "\uEDB5"
+                            text: music_settings.playIcon
+
+                            onClicked: {
+                                Functions.play(title)
+                            }
+
                         }
 
                         CustomToolButton {
                             width: 48
                             text: "\uE710"
+
+
+
                         }
 
 
@@ -165,24 +195,7 @@ Component {
 
         }
 
-        MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
 
-            onEntered: {
-                ctrl.hovered = true
-            }
-
-            onClicked: {
-                var index = songs_view.indexAt(parent.x, parent.y)
-                songs_view.currentIndex = index
-            }
-
-            onExited: {
-                ctrl.hovered = false
-            }
-
-        }
 
     }
 
