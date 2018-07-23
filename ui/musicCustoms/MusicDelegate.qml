@@ -31,6 +31,7 @@ Component {
             onClicked: {
                 var index = songs_view.indexAt(parent.x, parent.y)
                 songs_view.currentIndex = index
+                now_playing = index
             }
 
             onExited: {

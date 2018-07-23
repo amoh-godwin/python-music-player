@@ -16,8 +16,10 @@ ApplicationWindow {
     property bool inPotrait: window.width < 1024
     property color artistNeutral: Qt.darker("#D13438")
     property color artistTint: Qt.tint(artistNeutral, "#21ffffff")
+    property QtObject song_model: MusicModel {}
     property var songs_list: []
     property int songs_count: 0
+    property int now_playing: 0
     property bool paused: false
 
     // Drawer and the stack
@@ -83,7 +85,7 @@ ApplicationWindow {
                                 bottom: parent.bottom
                             }
 
-                            model: MusicModel {}
+                            model: song_model //MusicModel {}
 
                             delegate: MusicDelegate {}
 
@@ -111,7 +113,7 @@ ApplicationWindow {
         anchors.fill: parent
         color: "transparent"
 
-        CustomSideNav {id: sideNav}
+        CustomSideNav { id: sideNav }
 
 
         Rectangle {
@@ -377,6 +379,11 @@ ApplicationWindow {
                         CustomPlayButton {
                             anchors.verticalCenter: parent.verticalCenter
                             text: music_settings.previousIcon
+                            onClicked: {
+
+                                Functions.play(song_model.get(now_playing - 1).title)
+
+                            }
                         }
 
                         Button {
@@ -385,13 +392,17 @@ ApplicationWindow {
                             text: music_settings.playIcon
 
                             onClicked: if(text == music_settings.playIcon && paused == true) {
+
                                 paused = false
                                 Functions.resume()
                                 text = music_settings.pauseIcon
+
                             } else if(text == music_settings.playIcon) {
+
                                    paused = false
                                    text = music_settings.pauseIcon
-                                   Functions.play("C:/Users/Godwin/Music/Joyce Blessing – I Swerve You (Prod. by Linkin) (www.ndwomfie.com).mp3")
+                                   Functions.play(song_model.get(now_playing).title)
+
                                } else {
                                    paused = true
                                    text = music_settings.playIcon
@@ -422,6 +433,11 @@ ApplicationWindow {
                         CustomPlayButton {
                             anchors.verticalCenter: parent.verticalCenter
                             text: music_settings.nextIcon
+
+                            onClicked: {
+                                Functions.play(song_model.get(now_playing + 1).title)
+                            }
+
 
                         }
 
