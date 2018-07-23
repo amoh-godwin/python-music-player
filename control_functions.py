@@ -22,6 +22,8 @@ class Control(QObject):
         self.app_running = True
         self._not_paused = True
         
+    completedPlaying = pyqtSignal(str, arguments=["complete"])
+        
 
     @pyqtSlot(str)
     def play(self, file):
@@ -56,16 +58,78 @@ class Control(QObject):
                         rate = srate,
                         output = True)
 
-        data = mbin.readframes(1024)
+        data = mbin.readframes(2048)
         
-        while data:
+        #while data:
 
-            while self.app_running:
+        while self.app_running and len(data) != 0:
+
+            if self._not_paused:
+
                 stream.write(data)
-                data = mbin.readframes(8192)
+                data = mbin.readframes(1024)
 
+            else:
+                
+                # pause
+                pass
+
+        self.complete()
         mbin.close()
         stream.stop_stream()
         stream.close()
 
         pyaud.terminate()
+
+
+    @pyqtSlot()
+    def pause(self):
+
+
+        """
+        """
+
+
+        pause_thread = threading.Thread(target=self._pause)
+        pause_thread.start()
+
+
+    def _pause(self):
+
+
+        """
+        """
+
+        self._not_paused = False
+
+
+    @pyqtSlot()
+    def resume(self):
+
+
+        """
+        """
+
+
+        resume_thread = threading.Thread(target=self._resume)
+        resume_thread.start()
+
+
+    def _resume(self):
+
+
+        """
+        """
+
+        self._not_paused = True
+
+
+    def complete(self):
+
+
+        """
+        """
+
+
+        print('complete')
+        self.completedPlaying.emit('completed')

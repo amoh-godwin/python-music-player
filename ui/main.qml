@@ -18,6 +18,7 @@ ApplicationWindow {
     property color artistTint: Qt.tint(artistNeutral, "#21ffffff")
     property var songs_list: []
     property int songs_count: 0
+    property bool paused: false
 
     // Drawer and the stack
     Rectangle {
@@ -379,12 +380,23 @@ ApplicationWindow {
                         }
 
                         Button {
+                            id: playButton
                             anchors.verticalCenter: parent.verticalCenter
                             text: music_settings.playIcon
 
-                            onClicked: {
-                                Functions.play("C:/Users/Godwin/Music/Joyce Blessing – I Swerve You (Prod. by Linkin) (www.ndwomfie.com).mp3")
-                            }
+                            onClicked: if(text == music_settings.playIcon && paused == true) {
+                                paused = false
+                                Functions.resume()
+                                text = music_settings.pauseIcon
+                            } else if(text == music_settings.playIcon) {
+                                   paused = false
+                                   text = music_settings.pauseIcon
+                                   Functions.play("C:/Users/Godwin/Music/Joyce Blessing – I Swerve You (Prod. by Linkin) (www.ndwomfie.com).mp3")
+                               } else {
+                                   paused = true
+                                   text = music_settings.playIcon
+                                   Functions.pause()
+                               }
 
                             background: Rectangle {
                                 implicitWidth: 48
@@ -503,6 +515,11 @@ ApplicationWindow {
 
     Connections {
         target: Functions
+
+        onCompletedPlaying: {
+            playButton.text = music_settings.playIcon
+        }
+
     }
 
 

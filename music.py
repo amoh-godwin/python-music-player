@@ -28,7 +28,7 @@ class MusicApp():
         """
         """
     
-    
+
         self.control.app_running = False
     
     
@@ -55,7 +55,8 @@ class MusicApp():
         self.control = Control()
         engine.rootContext().setContextProperty('Functions', self.control)
         engine.load(self.main_qml)
-        engine.quit.connect(self._postprocesses)
+        engine.quit.connect(app.quit)
+        app.aboutToQuit.connect(self._postprocesses)
         sys.exit(app.exec_())
 
 
