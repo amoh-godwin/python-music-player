@@ -5,11 +5,7 @@ ToolButton {
     id: btnCtrl
 
     property string iconSource: ""
-    signal click()
-
-    onClicked: {
-        //
-    }
+    signal clicked()
 
     background: Rectangle {
 
@@ -43,6 +39,8 @@ ToolButton {
         onEntered: {
             ctrl.hovered = true
         }
+
+        onClicked: parent.clicked()
 
         onExited: ctrl.hovered = false
 
