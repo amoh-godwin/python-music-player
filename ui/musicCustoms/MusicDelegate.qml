@@ -12,7 +12,7 @@ Component {
         id: ctrl
 
         property bool hovered: false
-        property color curr_color: "dodgerblue"
+        property color curr_color: ctrl.ListView.isCurrentItem ? "dodgerblue" : "#e1e1e1"
 
         MusicProperties { id: music_settings}
 
@@ -31,7 +31,6 @@ Component {
             onClicked: {
                 var index = songs_view.indexAt(parent.x, parent.y)
                 songs_view.currentIndex = index
-                now_playing = index
             }
 
             onExited: {
@@ -84,29 +83,27 @@ Component {
                     anchors.right: parent.right
                     width: 104
                     height: parent.height
-                    color: "#e1e1e1"
-                    visible: ctrl.ListView.isCurrentItem ? true : false
+                    color: "transparent"
+                    visible: ctrl.hovered || ctrl.ListView.isCurrentItem ? true : false
 
                     RowLayout {
                         anchors.right: parent.right
                         width: 96
 
-                        CustomToolButton {
-                            width: 48
+                        CustomHoverButton {
+                            Layout.preferredWidth: 48
                             text: music_settings.playIcon
 
                             onClicked: {
+                                now_playing = index
                                 Functions.play(title)
                             }
 
                         }
 
-                        CustomToolButton {
-                            width: 48
+                        CustomHoverButton {
+                            Layout.preferredWidth: 48
                             text: "\uE710"
-
-
-
                         }
 
 

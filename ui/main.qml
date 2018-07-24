@@ -333,19 +333,18 @@ ApplicationWindow {
                             width: parent.parent.width - 90 - parent.spacing
                             Text {
                                 width: parent.parent.parent.width - 90 - parent.parent.spacing - 10
-                                text: qsTr('River Of Jordan || Busysinging.com')
+                                text: qsTr(song_model.get(now_playing).title)
                                 font.family: "Segoe UI Light"
                                 color: "white"
                                 font.pixelSize: 20
                                 font.bold: false
                                 font.weight: Font.Thin
-
                                 clip: true
                             }
 
                             Text {
                                 width: parent.children[0].width
-                                text: qsTr('Lecrae')
+                                text: qsTr(song_model.get(now_playing).artist)
                                 font.family: "Segoe UI"
                                 font.pixelSize: 16
                                 font.bold: true

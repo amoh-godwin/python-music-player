@@ -14,6 +14,7 @@ ToolBar {
     }
 
     ButtonGroup {
+        id: btn_group
         buttons: btnConts.children
         exclusive: true
 
@@ -25,6 +26,7 @@ ToolBar {
     ColumnLayout {
         id: btnConts
         width: parent.width
+        height: parent.height
         spacing: 0
 
         CustomToolButton {
@@ -39,38 +41,52 @@ ToolBar {
 
         CustomToolButton {
             Layout.fillWidth: true
-            text: "\uE721"
+            text: music_settings.searchIcon
+
+            onClicked: {
+                navCont.open()
+            }
+
         }
 
         CustomToolButton {
             Layout.fillWidth: true
-            text: "\uEc4f"
+            text: music_settings.musicIcon
         }
 
         CustomToolButton {
             Layout.fillWidth: true
-            text: "\uE823"
+            text: music_settings.recentIcon
         }
 
         CustomToolButton {
             Layout.fillWidth: true
-            text: "\uE700"
+            text: music_settings.nowPlayingIcon
         }
 
         CustomToolButton {
             Layout.fillWidth: true
-            text: "\uE90B"
+            text: music_settings.playlistIcon
         }
 
         CustomToolButton {
             Layout.fillWidth: true
-            text: "\uE710"
+            text: music_settings.addIcon
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            color: "transparent"
         }
 
         CustomToolButton {
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
             Layout.fillWidth: true
-            text: "\uE712"
+            text: music_settings.cogIcon
         }
+
     }
 
 }
