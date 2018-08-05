@@ -45,8 +45,9 @@ ToolBar {
                 anchors.centerIn: parent
                 placeholderText: qsTr("Search")
 
-                font.pixelSize: 16
-                font.family: "Segoe UI"
+                font.pixelSize: 15
+                font.family: "Segoe UI Semilight"
+                renderType: Text.NativeRendering
                 rightPadding: rw.width
 
                 background: Rectangle {
@@ -54,7 +55,7 @@ ToolBar {
                     implicitHeight: 36
                     color: parent.activeFocus ? "white" :
                                                 (parent.hovered ? Qt.rgba(255, 255, 255, 0.75) :
-                                                                  "#75ffffff")
+                                                                  "#45ffffff")
 
                     Row {
                         id: rw

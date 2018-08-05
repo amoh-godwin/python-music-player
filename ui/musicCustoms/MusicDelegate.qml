@@ -12,13 +12,15 @@ Component {
         id: ctrl
 
         property bool hovered: false
-        property color curr_color: ctrl.ListView.isCurrentItem ? "dodgerblue" : "#e1e1e1"
+        property color curr_color: ctrl.ListView.isCurrentItem && hovered ? Qt.darker("dodgerblue", 1.2) :
+                                                                ( ctrl.ListView.isCurrentItem ? "dodgerblue" : "#e1e1e1")
+        property color textColor: index == now_playing ? Qt.darker("dodgerblue", 1.2) : (ctrl.ListView.isCurrentItem ? "white" : "black")
 
         MusicProperties { id: music_settings}
 
         width: parent.width
         height: 50
-        color: ctrl.ListView.isCurrentItem ? ctrl.curr_color : ( ctrl.hovered ? "#e1e1e1" : (index % 2 ? "white" : "#f1f1f1") )
+        color: ctrl.ListView.isCurrentItem || hovered ? ctrl.curr_color : (index % 2 ? "white" : "#f1f1f1")
 
         MouseArea {
             anchors.fill: parent
@@ -75,7 +77,7 @@ Component {
                     clip: true
                     text: qsTr(title)
                     font.pixelSize: 16
-                    font.family: "Segoe UI Semilight"
+                    font.family: "Segoe UI"
                     color: ctrl.ListView.isCurrentItem ? "white" :"black"
                 }
 
@@ -89,6 +91,7 @@ Component {
                     RowLayout {
                         anchors.right: parent.right
                         width: 96
+                        spacing: 0
 
                         CustomHoverButton {
                             Layout.preferredWidth: 48
@@ -128,7 +131,7 @@ Component {
                 }
             }
 
-            // album
+            // genre
             Rectangle {
                 Layout.fillWidth: !inPotrait
                 Layout.fillHeight: true
@@ -171,17 +174,17 @@ Component {
                     anchors.centerIn: parent
                     width: local.width
                     height: local.height
-                    border.color: ctrl.ListView.isCurrentItem ? "white" :"black"
+                    border.color: ctrl.textColor
                     color: "transparent"
                     Text {
-                        topPadding: 2
+                        //topPadding: 1
                         leftPadding: 3
-                        bottomPadding: 2
+                        bottomPadding: 1
                         rightPadding: 3
                         id: local
                         text: "LOCAL ONLY"
-                        font.family: "Segoe UI Light"
-                        font.pixelSize: 10
+                        font.family: "Segoe UI Semilight"
+                        font.pixelSize: 9
                         renderType: Text.NativeRendering
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter

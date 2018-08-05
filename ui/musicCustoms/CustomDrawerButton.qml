@@ -25,6 +25,7 @@ Button {
 
     contentItem: RowLayout {
         height: 48
+        spacing: 0
         property string menuName: qsTr('My music')
         property string iconSource: "icons/ic_queue_music_black_48dp.png"
 

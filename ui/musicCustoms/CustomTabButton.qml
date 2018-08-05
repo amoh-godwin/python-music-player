@@ -22,7 +22,7 @@ TabButton {
     }
 
     contentItem: Text {
-        width: width
+        //width: width
         anchors.left: parent.left
         text: parent.text
         verticalAlignment: Text.AlignVCenter

@@ -31,8 +31,8 @@ Menu {
         }
 
         background: Rectangle {
-            implicitWidth: 200
-            implicitHeight: 40
+            //implicitWidth: 200
+            //implicitHeight: 40
             color: menuItem.highlighted ? "#e1e1e1" : "transparent"
         }
 

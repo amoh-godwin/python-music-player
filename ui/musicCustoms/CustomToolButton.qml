@@ -8,7 +8,8 @@ ToolButton {
 
     background: Rectangle {
 
-        implicitHeight: 50
+        implicitHeight: 48
+        height: implicitHeight
         color: parent.hovered ? "#e1e1e1" : "transparent"
 
         Rectangle {

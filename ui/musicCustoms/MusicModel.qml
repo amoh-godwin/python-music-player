@@ -2,27 +2,35 @@ import QtQuick 2.10
 
 ListModel {
     ListElement {
-        title: "song 1"
+        title: "River of Jordan"
         artist: "Lecrae"
         album: "River of Jordan"
-        duration: "1:36:00"
+        genre: ""
+        duration: "2:15"
+        file: ""
     }
     ListElement {
-        title: "song 2"
-        artist: "Acapella"
-        album: "Consuellor Twill0"
-        duration: "1:36:00"
+        title: "Hallelujah"
+        artist: "Don Moen"
+        album: "Amen"
+        genre: ""
+        duration: "3:00"
+        file: ""
     }
     ListElement {
-        title: "song 3"
-        artist: "Acapella"
-        album: "Consuellor Twill1"
-        duration: "1:36:00"
+        title: "Track 03"
+        artist: "Adam West"
+        album: "Love of God"
+        genre: ""
+        duration: "4:15"
+        file: ""
     }
     ListElement {
-        title: "song 4"
-        artist: "Acapella"
-        album: "Consuellor Twill2"
-        duration: "1:36:00"
+        title: "This girl"
+        artist: "Michael Jackson"
+        album: "Amen"
+        genre: ""
+        duration: "12:00"
+        file: ""
     }
 }

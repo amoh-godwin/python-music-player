@@ -9,7 +9,7 @@ ApplicationWindow {
     width: 800
     height: 600
 
-    title: qsTr(' ')
+    title: qsTr('Python Music')
 
     MusicProperties {id: music_settings}
 
@@ -19,7 +19,7 @@ ApplicationWindow {
     property QtObject song_model: MusicModel {}
     property var songs_list: []
     property int songs_count: 0
-    property int now_playing: 0
+    property int now_playing: song_model.get(0).index
     property bool paused: false
 
     // Drawer and the stack
@@ -118,9 +118,11 @@ ApplicationWindow {
 
         Rectangle {
             id: mainNav
-            anchors.right: parent.right
-            anchors.rightMargin: 24
-            width: parent.width - sideNav.width - (24 * 2)
+            x: !inPotrait && navCont.position == 0 ? sideNav.width + 24 : 24
+            width: !inPotrait && navCont.position > 0 ? parent.width - 48 - (320 * navCont.position) : parent.width - 48 - sideNav.width
+            transform: Translate {
+                x: inPotrait ? sideNav.width : (navCont.position * 320)
+            }
             height: 248
             color: "white"
 
@@ -331,6 +333,7 @@ ApplicationWindow {
 
                         Column {
                             width: parent.parent.width - 90 - parent.spacing
+
                             Text {
                                 width: parent.parent.parent.width - 90 - parent.parent.spacing - 10
                                 text: qsTr(song_model.get(now_playing).title)
@@ -359,7 +362,7 @@ ApplicationWindow {
 
                 // Play Controls
                 ColumnLayout {
-                    width: playCont.width / 3 || 250
+                    Layout.preferredWidth: playCont.width / 3 || 250
                     Layout.fillHeight: true
                     spacing: 0
 
