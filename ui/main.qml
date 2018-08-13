@@ -19,7 +19,7 @@ ApplicationWindow {
     property QtObject song_model: MusicModel {}
     property var songs_list: []
     property int songs_count: 0
-    property int now_playing: song_model.get(0).index
+    property int now_playing: 0
     property bool paused: false
 
     // Drawer and the stack
@@ -47,7 +47,7 @@ ApplicationWindow {
         StackView {
 
             id: stack
-            x: !inPotrait && navCont.position == 0 ? sideNav.width : 0
+            x: !inPotrait && navCont.position === 0 ? sideNav.width : 0
             width: !inPotrait && navCont.position > 0 ? parent.width - (320 * navCont.position) : parent.width - sideNav.width
             height: parent.height - 90
             transform: Translate {
@@ -90,8 +90,7 @@ ApplicationWindow {
                             delegate: MusicDelegate {}
 
                             Component.onCompleted: {
-                                model.append(songs_list)
-                                songs_count = songs_view.count
+                                //FileSys.bootUp()
                             }
 
                             focus: true
@@ -118,7 +117,7 @@ ApplicationWindow {
 
         Rectangle {
             id: mainNav
-            x: !inPotrait && navCont.position == 0 ? sideNav.width + 24 : 24
+            x: !inPotrait && navCont.position === 0 ? sideNav.width + 24 : 24
             width: !inPotrait && navCont.position > 0 ? parent.width - 48 - (320 * navCont.position) : parent.width - 48 - sideNav.width
             transform: Translate {
                 x: inPotrait ? sideNav.width : (navCont.position * 320)
@@ -130,12 +129,15 @@ ApplicationWindow {
                 width: parent.width
                 spacing: 0
 
+
+                Rectangle {
                 Text {
                     topPadding: 8
                     bottomPadding: 8
                     text: qsTr('My music')
                     font.family: "Segoe UI Light"
                     font.pixelSize: 36
+                }
                 }
 
                 TabBar {
@@ -332,6 +334,7 @@ ApplicationWindow {
                         }
 
                         Column {
+                            id: albumArtCol
                             width: parent.parent.width - 90 - parent.spacing
 
                             Text {
@@ -384,7 +387,7 @@ ApplicationWindow {
                             onClicked: {
 
                                 now_playing -= 1
-                                Functions.play(song_model.get(now_playing).title)
+                                Functions.play(song_model.get(now_playing).file, song_model.get(now_playing).format_name)
 
                             }
                         }
@@ -397,14 +400,14 @@ ApplicationWindow {
                             onClicked: if(text == music_settings.playIcon && paused == true) {
 
                                 paused = false
-                                Functions.resume()
                                 text = music_settings.pauseIcon
+                                Functions.resume()
 
                             } else if(text == music_settings.playIcon) {
 
                                    paused = false
                                    text = music_settings.pauseIcon
-                                   Functions.play(song_model.get(now_playing).title)
+                                   Functions.play(song_model.get(now_playing).file, song_model.get(now_playing).format_name)
 
                                } else {
                                    paused = true
@@ -439,7 +442,7 @@ ApplicationWindow {
 
                             onClicked: {
                                 now_playing += 1
-                                Functions.play(song_model.get(now_playing).title)
+                                Functions.play(song_model.get(now_playing).file)
                             }
 
 
@@ -467,7 +470,7 @@ ApplicationWindow {
                         }
 
                         Text {
-                            text: qsTr('1:18')
+                            text: qsTr(song_model.get(now_playing).duration)
                             color: "white"
                         }
 
@@ -544,6 +547,24 @@ ApplicationWindow {
             playButton.text = music_settings.pauseIcon
         }
 
+    }
+
+    Connections {
+        target: FileSys
+
+        onStartUp: {
+            songs_list = bootUp
+            //stack.children[0].children[0].children[0].model.append(songs_list)
+            song_model.clear()
+            song_model.append(songs_list)
+            console.log(song_model)
+            //song_model = stack.children[0].children[0].children[0].model
+            //albumArtCol.children[0].text = song_model.get(0).title
+            //albumArtCol.children[1].text = song_model.get(0).artist
+            songs_count = song_model.count
+            console.log(_prep_file)
+            Functions.play(song_model.get(0).file, song_model.get(0).format_name)
+        }
     }
 
 

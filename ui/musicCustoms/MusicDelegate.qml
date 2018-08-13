@@ -99,7 +99,7 @@ Component {
 
                             onClicked: {
                                 now_playing = index
-                                Functions.play(title)
+                                Functions.play(file, format_name)
                             }
 
                         }

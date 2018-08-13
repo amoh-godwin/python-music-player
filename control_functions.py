@@ -1,6 +1,9 @@
+import os
 import sys
 import threading
 import wave
+import pyaudio
+from ffmpeg import Ffmpeg
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
 
 class Control(QObject):
@@ -21,13 +24,14 @@ class Control(QObject):
         self.app_running = True
         self._not_paused = True
         self._not_stopped = False
+        self.ff = Ffmpeg()
         
     stillPlaying = pyqtSignal(str, arguments=['playing'])
     completedPlaying = pyqtSignal(str, arguments=["complete"])
         
 
-    @pyqtSlot(str)
-    def play(self, file):
+    @pyqtSlot(str, str)
+    def play(self, file, f_for):
 
 
         """
@@ -36,41 +40,48 @@ class Control(QObject):
 
         self._not_stopped = False
         self.file = file
-        play_thread = threading.Thread(target=self._play)
+        play_thread = threading.Thread(target=self._play, args=[f_for])
         play_thread.start()
 
 
-    def _play(self):
+    def _play(self, f_for):
 
 
         """
         """
 
+        splits = os.path.split(self.file)
+        filename = splits[1].replace(f_for, 'wav')
+        file = self.ff.sav_dir + '/' + filename
+        if self.app_running:
+            self.ff.convert(self.file, f_for)
+        else:
+            return 1
+        print('quick or ')
 
-        print(self.file)
-        
-        """mbin = wave.open(self.file, mode='rb')
-        
         pyaud = pyaudio.PyAudio()
-        
-        stream = pyaud.open(format = pyaud.get_format_from_width(2),
-                        channels = 1,
-                        rate = 44100,
-                        output = True)
 
-        data = mbin.readframes(2048)
+        wf = wave.open(file, mode='rb')
+        
+        stream = pyaud.open(format=pyaud.get_format_from_width(wf.getsampwidth()),
+                channels=wf.getnchannels(),
+                rate=wf.getframerate(),
+                output=True)
+
         self.playing()
         self._not_stopped = True
+        
+        data = wf.readframes(1)
 
         while self.app_running and len(data) != 0:
-            
+
 
             if self._not_stopped:
                 if self._not_paused:
     
                     stream.write(data)
-                    data = mbin.readframes(512)
-                
+                    data = wf.readframes(512)
+
                 else:
                     
                     #pause
@@ -78,12 +89,11 @@ class Control(QObject):
             else:
                 break
 
-        self.complete()
-        mbin.close()
+        wf.close()
         stream.stop_stream()
         stream.close()
 
-        pyaud.terminate()"""
+        pyaud.terminate()
         self.complete()
 
 
