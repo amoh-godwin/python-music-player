@@ -29,6 +29,8 @@ class Fs(QObject):
     startUp = pyqtSignal(list, arguments=['bootUp'])
     called = pyqtSignal(list, arguments=['callToPlay'])
     propertyChanged = pyqtSignal(list, arguments=['propertyNotifier'])
+    endOfPropertyChange = pyqtSignal(list, arguments=['endPropertyChange'])
+    propertyEnd = pyqtSignal(list, arguments=['propertyEnded'])
 
     @pyqtSlot()
     def bootUp(self):
@@ -54,15 +56,50 @@ class Fs(QObject):
 
     def _propertyNotify(self):
         
-        while self.app_running:
+        while self.app_running and self.now_crawling:
             
-            sleep(.5)
-            if self.now_crawling:
+            sleep(.3)
                 
-                count = len(self.prop)
-                if count > self.filesPrevCount:
-                    self.filesPrevCount = count
-                    self.propertyNotifier([count, self.prop])
+            count = len(self.prop)
+            if count > self.filesPrevCount:
+                self.filesPrevCount = count
+                self.propertyNotifier([count, self.prop])
+
+        print('\n\n*******', 'has ended the property and crawling loop', '\n\n')
+
+    def endPropertyChange(self):
+        
+        sleep(1)
+        print('\n\nghghjghgljhjjhhlhj\n\n')
+        count = len(self.prop)
+        result = [count, '']
+
+        # emit the end of property
+        self.endOfPropertyChange.emit(result)
+
+
+    def endProperty(self):
+        
+        self.now_crawling = False
+
+        self.endPropertyChange()
+
+        endProp = threading.Thread( target = self._endProperty )
+        endProp.start()
+
+
+    def _endProperty(self):
+        
+        sleep(5)
+        print('\n\nHere\n\n')
+        self.prop = 0
+        self.propertyEnded()
+
+
+    def propertyEnded(self):
+ 
+        result = []
+        self.propertyEnd.emit(result)
 
 
     def prepare(self, file):
@@ -121,7 +158,8 @@ class Fs(QObject):
             
             if tags not in self.files:
                 self.files.append(tags)
-
+                
+        self.endProperty()
 
     def ffjob(self, file):
         print('\n\n\ncalled\n\n\n')
@@ -155,7 +193,7 @@ class Fs(QObject):
     def _list_dir(self, directory):
 
         print('\n\n\n here \n\n\n')
-        sleep(15)
+        sleep(.3)
         self._search(directory)
         return self._sub_files
 

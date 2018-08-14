@@ -655,7 +655,20 @@ ApplicationWindow {
             song_model.clear()
             song_model.append(args[1])
             songs_count = args[0]
+            songs_info_text = "We're adding"
+        }
+
+        onEndOfPropertyChange: {
+            var args = endPropertyChange
+            console.log('\n\n\n', 'jhjklhjklhjklhjkh', '\n\n\n')
+            appendedSongsCount = args[0]
             songs_info_text = "We've added"
+            console.log(songs_info_text)
+        }
+
+        onPropertyEnd: {
+            console.log('\n\n', 'Love', '\n\n')
+            songs_info.visible = false
         }
 
     }
