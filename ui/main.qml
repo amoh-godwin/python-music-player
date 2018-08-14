@@ -17,10 +17,17 @@ ApplicationWindow {
     property color artistNeutral: Qt.darker("#D13438")
     property color artistTint: Qt.tint(artistNeutral, "#21ffffff")
     property QtObject song_model: MusicModel {}
+    property bool started: false
     property var songs_list: []
     property int songs_count: 0
+    property int appendedSongsCount: 0
+    property string songs_info_text: "We're adding"
     property int now_playing: 0
     property bool paused: false
+
+    QtObject {
+        Component.onCompleted: FileSys.bootUp()
+    }
 
     // Drawer and the stack
     Rectangle {
@@ -131,13 +138,85 @@ ApplicationWindow {
 
 
                 Rectangle {
-                Text {
-                    topPadding: 8
-                    bottomPadding: 8
-                    text: qsTr('My music')
-                    font.family: "Segoe UI Light"
-                    font.pixelSize: 36
-                }
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: 64
+                    color: "transparent"
+
+                    RowLayout {
+                        width: parent.width
+                        height: 64
+
+                        Text {
+                            anchors.left: parent.left
+                            topPadding: 8
+                            bottomPadding: 8
+                            text: qsTr('My music')
+                            font.family: "Segoe UI Light"
+                            font.pixelSize: 36
+                        }
+
+                        Rectangle {
+                            id: songs_info
+                            anchors.top: parent.top
+                            anchors.topMargin: 24
+                            anchors.right: parent.right
+                            anchors.rightMargin: 0
+                            Layout.preferredWidth: 320
+                            Layout.preferredHeight: 48
+                            color: "dodgerblue"
+                            visible: false
+
+                            RowLayout {
+                                anchors.top: parent.top
+                                anchors.topMargin: 8
+                                anchors.left: parent.left
+                                anchors.leftMargin: 8
+                                width: parent.width - 16
+                                height: parent.height - 16
+
+                                ColumnLayout {
+                                    anchors.top: parent.top
+                                    Layout.fillWidth: true
+                                    spacing: 0
+
+                                    Row {
+                                        spacing: 8
+                                        Text {
+                                            text: music_settings.cogIcon
+                                            font.family: "Segoe MDL2 Assets"
+                                            font.pixelSize: 14
+                                            color: "white"
+                                        }
+
+                                        Text {
+                                            text: songs_info_text + " music"
+                                            color: "white"
+                                            font.pixelSize: 14
+                                        }
+
+                                    }
+
+                                    Text {
+                                        text: appendedSongsCount + " songs"
+                                        font.pixelSize: 14
+                                        color: "white"
+                                    }
+
+                                }
+
+                                Text {
+                                    anchors.right: parent.right
+                                    text: music_settings.cancelIcon
+                                    font.family: "Segoe MDL2 Assets"
+                                    font.pixelSize: 13
+                                    color: "white"
+                                }
+
+                            }
+
+                        }
+
+                    }
                 }
 
                 TabBar {
@@ -339,7 +418,7 @@ ApplicationWindow {
 
                             Text {
                                 width: parent.parent.parent.width - 90 - parent.parent.spacing - 10
-                                text: qsTr(song_model.get(now_playing).title)
+                                text: started ? qsTr(song_model.get(now_playing).title) : ""
                                 font.family: "Segoe UI Light"
                                 color: "white"
                                 font.pixelSize: 20
@@ -350,7 +429,7 @@ ApplicationWindow {
 
                             Text {
                                 width: parent.children[0].width
-                                text: qsTr(song_model.get(now_playing).artist)
+                                text: started ? qsTr(song_model.get(now_playing).artist): ""
                                 font.family: "Segoe UI"
                                 font.pixelSize: 16
                                 font.bold: true
@@ -554,17 +633,31 @@ ApplicationWindow {
 
         onStartUp: {
             songs_list = bootUp
-            //stack.children[0].children[0].children[0].model.append(songs_list)
             song_model.clear()
             song_model.append(songs_list)
-            console.log(song_model)
-            //song_model = stack.children[0].children[0].children[0].model
-            //albumArtCol.children[0].text = song_model.get(0).title
-            //albumArtCol.children[1].text = song_model.get(0).artist
+            started = true
             songs_count = song_model.count
-            console.log(_prep_file)
-            Functions.play(song_model.get(0).file, song_model.get(0).format_name)
+
         }
+
+        onCalled: {
+            console.log('\n\n')
+            var args = callToPlay
+            now_playing = args[2]
+            Functions.play(args[0], args[1])
+        }
+
+        onPropertyChanged: {
+            songs_info.visible = true
+            var args = propertyNotifier
+            console.log('\n\n\nwith love\n\n\n')
+            appendedSongsCount = args[0]
+            song_model.clear()
+            song_model.append(args[1])
+            songs_count = args[0]
+            songs_info_text = "We've added"
+        }
+
     }
 
 

@@ -1,1 +1,1 @@
-Folders = ['C:/Users/GODWIN/Music/wav', 'C:/Users/GODWIN/Music/Music/CEE/OSABERIMA']
+Folders = ['C:/Users/GODWIN/Music/sounds/music']

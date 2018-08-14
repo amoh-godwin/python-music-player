@@ -58,8 +58,18 @@ class Ffmpeg():
 
         # use the calc time as duration
         info['duration'] = calc_time
-        if 'tags' in data:
+
+        if 'tags' in data and 'title' in data['tags']:
             info.update(data['tags'])
+        else:
+            splits = os.path.split(i)
+            name = splits[1]
+
+            fake = {}
+            fake['tags'] = {'title': name, 'artist': 'Unknown',
+                'album': 'Unknown Album'}
+            info.update(fake['tags'])
+
         return info
         
     

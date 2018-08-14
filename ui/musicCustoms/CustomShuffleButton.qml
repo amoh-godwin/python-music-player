@@ -12,6 +12,7 @@ Button {
     background: Rectangle {
         implicitWidth: 16
         implicitHeight: 48
+        color: "transparent"
 
         Text {
             anchors.verticalCenter: parent.verticalCenter
