@@ -50,7 +50,7 @@ class Fs(QObject):
 
     def propertyNotifier(self, result):
         
-        print(result[0])
+
         self.propertyChanged.emit(result)
 
 
@@ -65,12 +65,10 @@ class Fs(QObject):
                 self.filesPrevCount = count
                 self.propertyNotifier([count, self.prop])
 
-        print('\n\n*******', 'has ended the property and crawling loop', '\n\n')
 
     def endPropertyChange(self):
         
         sleep(1)
-        print('\n\nghghjghgljhjjhhlhj\n\n')
         count = len(self.prop)
         result = [count, '']
 
@@ -90,8 +88,7 @@ class Fs(QObject):
 
     def _endProperty(self):
         
-        sleep(5)
-        print('\n\nHere\n\n')
+        sleep(15)
         self.prop = 0
         self.propertyEnded()
 
@@ -127,7 +124,7 @@ class Fs(QObject):
 
     def callToPlay(self):
         
-        print('\n\n\nhas been called ')
+
         index = self.prep_file_index
         lists = [self._prep_file, self.files[index]['format_name'], index ]
 
@@ -162,7 +159,8 @@ class Fs(QObject):
         self.endProperty()
 
     def ffjob(self, file):
-        print('\n\n\ncalled\n\n\n')
+
+        
         self._ffjob(file)
 
 
@@ -192,7 +190,7 @@ class Fs(QObject):
 
     def _list_dir(self, directory):
 
-        print('\n\n\n here \n\n\n')
+
         sleep(.3)
         self._search(directory)
         return self._sub_files

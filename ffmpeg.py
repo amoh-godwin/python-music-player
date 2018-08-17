@@ -38,7 +38,7 @@ class Ffmpeg():
         info['file'] = data['filename']
         info['format_name'] = data['format_name']
         info['size'] = data['size']
-        
+
         # calc the seconds
         dura = float(data['duration'])
         mins = int(dura / 60)
@@ -53,7 +53,7 @@ class Ffmpeg():
             calc_time = str(hrs) + ":" + str(mins) + ":" + secs
         else:
             calc_time = str(mins) + ":" + secs
-            
+
         print(calc_time)
 
         # use the calc time as duration
@@ -71,8 +71,8 @@ class Ffmpeg():
             info.update(fake['tags'])
 
         return info
-        
-    
+
+
     def convert(self, input_file, format_name):
 
 

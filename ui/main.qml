@@ -22,8 +22,64 @@ ApplicationWindow {
     property int songs_count: 0
     property int appendedSongsCount: 0
     property string songs_info_text: "We're adding"
+    property string play_var: 'play'
+    property string play_text: music_settings.playIcon
     property int now_playing: 0
     property bool paused: false
+
+    signal playFunction()
+    signal play()
+    signal pause()
+    signal stop()
+    signal resume()
+    signal swapPlayText()
+    signal swapPlayFunction(string func_name)
+
+    onPlayFunction: swapPlayFunction(play_var)
+
+    onPlay: {
+        stop()
+        Functions.play(song_model.get(now_playing).file, song_model.get(now_playing).format_name, song_model.get(now_playing).size)
+        play_var = 'pause'
+        play_text = music_settings.pauseIcon
+
+    }
+
+    onPause: {
+        Functions.pause()
+        play_text = music_settings.playIcon
+        play_var = 'resume'
+    }
+
+    onResume: {
+        Functions.resume()
+        play_text = music_settings.pauseIcon
+        play_var = 'pause'
+    }
+
+    onStop: {
+        // stop everthing
+        Functions.stop()
+        play_text = music_settings.playIcon
+        play_var = 'play'
+    }
+
+    onSwapPlayFunction: {
+        if(func_name == 'play') {
+            play()
+            play_var = 'pause'
+        } else if ( func_name == 'pause') {
+            pause()
+            play_var = 'resume'
+        } else {
+            resume()
+            play_var = 'pause'
+        }
+    }
+
+    onSwapPlayText: {
+        play_text = play_text == music_settings.playIcon ? music_settings.pauseIcon : music_settings.playIcon
+    }
 
     QtObject {
         Component.onCompleted: FileSys.bootUp()
@@ -466,7 +522,7 @@ ApplicationWindow {
                             onClicked: {
 
                                 now_playing -= 1
-                                Functions.play(song_model.get(now_playing).file, song_model.get(now_playing).format_name)
+                                play()
 
                             }
                         }
@@ -474,25 +530,9 @@ ApplicationWindow {
                         Button {
                             id: playButton
                             anchors.verticalCenter: parent.verticalCenter
-                            text: music_settings.playIcon
+                            text: play_text
 
-                            onClicked: if(text == music_settings.playIcon && paused == true) {
-
-                                paused = false
-                                text = music_settings.pauseIcon
-                                Functions.resume()
-
-                            } else if(text == music_settings.playIcon) {
-
-                                   paused = false
-                                   text = music_settings.pauseIcon
-                                   Functions.play(song_model.get(now_playing).file, song_model.get(now_playing).format_name)
-
-                               } else {
-                                   paused = true
-                                   text = music_settings.playIcon
-                                   Functions.pause()
-                               }
+                            onClicked: playFunction()
 
                             background: Rectangle {
                                 implicitWidth: 48
@@ -521,7 +561,7 @@ ApplicationWindow {
 
                             onClicked: {
                                 now_playing += 1
-                                Functions.play(song_model.get(now_playing).file)
+                                play()
                             }
 
 
@@ -545,11 +585,24 @@ ApplicationWindow {
                         }
 
                         CustomSlider {
+                            id: duraSlider
                             Layout.fillWidth: true
+
+                            from: 1.01
+                            to: 100
+                            value: 0
+
+
+                            onMoved: {
+
+                                Functions.seek(value, song_model.get(now_playing).size)
+
+                            }
+
                         }
 
                         Text {
-                            text: qsTr(song_model.get(now_playing).duration)
+                            text: started ? qsTr(song_model.get(now_playing).duration) : ""
                             color: "white"
                         }
 
@@ -571,7 +624,14 @@ ApplicationWindow {
                         }
 
                         CustomSlider {
-                            //
+                            id: volumeSlider
+                            from: 1.01
+                            to: 100
+                            value: 100
+
+                            onMoved: {
+                                Functions.controlVolume(value)
+                            }
                         }
 
                         CustomPlayButton {
@@ -614,16 +674,21 @@ ApplicationWindow {
 
     }
 
-
+    // Functions
     Connections {
         target: Functions
 
         onCompletedPlaying: {
-            playButton.text = music_settings.playIcon
+            play_text = music_settings.playIcon
+        }
+
+        onPropertyChanged: {
+            var args = propertyNotifier
+            duraSlider.value = args[0]
         }
 
         onStillPlaying: {
-            playButton.text = music_settings.pauseIcon
+            play_text = music_settings.pauseIcon
         }
 
     }
@@ -641,16 +706,15 @@ ApplicationWindow {
         }
 
         onCalled: {
-            console.log('\n\n')
             var args = callToPlay
             now_playing = args[2]
-            Functions.play(args[0], args[1])
+            //Functions.play(args[0], args[1])
+            play()
         }
 
         onPropertyChanged: {
             songs_info.visible = true
             var args = propertyNotifier
-            console.log('\n\n\nwith love\n\n\n')
             appendedSongsCount = args[0]
             song_model.clear()
             song_model.append(args[1])
@@ -660,14 +724,12 @@ ApplicationWindow {
 
         onEndOfPropertyChange: {
             var args = endPropertyChange
-            console.log('\n\n\n', 'jhjklhjklhjklhjkh', '\n\n\n')
             appendedSongsCount = args[0]
             songs_info_text = "We've added"
             console.log(songs_info_text)
         }
 
         onPropertyEnd: {
-            console.log('\n\n', 'Love', '\n\n')
             songs_info.visible = false
         }
 

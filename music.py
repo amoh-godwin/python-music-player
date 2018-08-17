@@ -4,6 +4,7 @@
 
 import sys
 import os
+from time import sleep
 from PyQt5.QtGui import QGuiApplication, QIcon
 from PyQt5.QtQml import QQmlApplicationEngine
 
@@ -24,7 +25,6 @@ class MusicApp():
         self.fileSys = Fs()
 
         self._preprocesses()
-
 
     def _postprocesses(self):
 
@@ -56,6 +56,7 @@ class MusicApp():
 
     def cleanUpFiles(self):
         
+        sleep(.3)
         folder = os.environ['USERPROFILE'].replace("\\", "/") + \
         "/.musicapp" + "/_temp"
         tmp_files = os.listdir(folder)
