@@ -2,7 +2,7 @@ import os
 from time import sleep
 import threading
 import wave
-import numpy as np
+#import numpy as np
 import struct
 import pyaudio
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot
@@ -34,10 +34,10 @@ class Control(QObject):
         self.volume_val = 1.4
         self.ff = Ffmpeg()
         print(threading.enumerate())
-        
+
     stillPlaying = pyqtSignal(str, arguments=['playing'])
     completedPlaying = pyqtSignal(str, arguments=["complete"])
-    
+
 
     @pyqtSlot(str, str, str)
     def play(self, file, f_for, size):
@@ -65,13 +65,13 @@ class Control(QObject):
         splits = os.path.split(self.file)
         filename = splits[1].replace(f_for, 'wav')
         file = self.ff.sav_dir + '/' + filename
-        
+
         if self.app_running:
             self.ff.convert(self.file, f_for)
-            
+
         else:
             return 1
-        
+
         print('quick or ')
 
         pyaud = pyaudio.PyAudio()
@@ -96,10 +96,10 @@ class Control(QObject):
 
             if self._not_stopped:
                 if self._not_paused:
-    
+
                     stream.write(a)
                     #a = wf.readframes(512)
-                    
+
                     a = (np.fromstring(wf.readframes(512), np.int16) )
                     self.t_played()
                     b = []
@@ -110,7 +110,7 @@ class Control(QObject):
                     a = struct.pack('h'*len(a), *a)
 
                 else:
-                    
+
                     #pause
                     sleep(.1)
             else:
@@ -126,11 +126,11 @@ class Control(QObject):
 
     @pyqtSlot()
     def stop(self):
-        
+
         """
         """
-        
-        
+
+
         stop_thread = threading.Thread(target=self._stop)
         stop_thread.start()
         # implement a wait
@@ -138,12 +138,12 @@ class Control(QObject):
 
 
     def _stop(self):
-        
-        
+
+
         """
         """
-        
-        
+
+
         self._not_stopped = False
         return
 
@@ -218,7 +218,7 @@ class Control(QObject):
             pass
         else:
             self.completedPlaying.emit('')
-            
+
 
     @pyqtSlot(str)
     def controlVolume(self, deci):
@@ -250,8 +250,8 @@ class Control(QObject):
 
         """
         """
-        
-        
+
+
         t_play = threading.Thread( target = self._t_played )
         t_play.start()
 
@@ -275,22 +275,22 @@ class Control(QObject):
 
 
         self.prop = prop
-        
+
         propNoti = threading.Thread(target = self._propertyNotify)
         propNoti.start()
 
     def propertyNotifier(self, result):
-        
+
 
         self.propertyChanged.emit(result)
 
 
     def _propertyNotify(self):
-        
+
         while self.app_running and self._not_stopped:
-            
+
             sleep(.3)
-                
+
             count = self.prop
             if count > self.filesPrevCount:
                 self.filesPrevCount = count
@@ -298,7 +298,7 @@ class Control(QObject):
 
 
     def endPropertyChange(self):
-        
+
         sleep(1)
         count = len(self.prop)
         result = [count, '']
@@ -308,7 +308,7 @@ class Control(QObject):
 
 
     def endProperty(self):
-        
+
         self.now_crawling = False
 
         self.endPropertyChange()
@@ -318,13 +318,13 @@ class Control(QObject):
 
 
     def _endProperty(self):
-        
+
         sleep(15)
         self.prop = 0
         self.propertyEnded()
 
 
     def propertyEnded(self):
- 
+
         result = []
         self.propertyEnd.emit(result)
