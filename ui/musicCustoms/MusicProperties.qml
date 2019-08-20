@@ -25,6 +25,6 @@ QtObject {
     property string moreIcon: "\uE712"
 
     property font segoeIcons: Qt.font({'family': "Segoe MDL2 Assets", 'pixelSize': 20})
-    property font segoeLight: Qt.font({'family': "Segoe MD", 'pixelSize': 12})
+    property font segoeLight: Qt.font({'family': "Segoe MDL2 Assets", 'pixelSize': 12})
 
 }
